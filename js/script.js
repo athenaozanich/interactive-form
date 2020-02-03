@@ -8,11 +8,8 @@
     document.getElementById('other-title').style.display= 'none';
     document.getElementById('colors-js-puns').style.display= 'none';
     design.firstElementChild.style.display = 'none';
-    
-    color.prepend(document.createRange()
-        .createContextualFragment(
-        `<option value='Please select a T-shirt theme' selected>Please select a T-shirt theme</option>`
-    ));
+
+})();
     title.addEventListener('change', function(e){
         if (e.target.value === 'other') {
             document.getElementById('other-title').style.display= ''
@@ -63,5 +60,4 @@
         }
     });
     
-})();
     
