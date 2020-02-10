@@ -191,9 +191,11 @@ function activitiesVal() {//validate activities section to ensure at least one a
     }
 }
 function payTypeVal() {//validate payment type and if type is credit card the validate card info
-    let parent = document.getElementById('credit-card');
-    let ccVal = document.querySelector('.col-6');
+    let ccValParent = document.querySelector('.col-6');
     let cvvZipVal = document.querySelectorAll('.col-3');
+    let ccVal = document.getElementById('cc-num');
+    let zipVal = document.getElementById('zip');
+    let cvvVal = document.getElementById('cvv');
     let ccErrorMsg = document.createRange()
     .createContextualFragment(
       `<p id="cc-error">*ERROR: We'll need your card number to complete this transaction!*</p>`
@@ -219,13 +221,13 @@ function payTypeVal() {//validate payment type and if type is credit card the va
     }
     if (payType === 'credit card') {
         if (!document.getElementById('cc-num').value.match(/^[\d]{13,16}$/)) {
-            parent.insertBefore(ccErrorMsg, ccVal.nextSibling);
+            ccValParent.insertBefore(ccErrorMsg, ccVal.nextSibling);
         }
         if (!document.getElementById('zip').value.match(/^[\d]{5}$/)) {
-            parent.insertBefore(zipErrorMsg, cvvZipVal[0].nextSibling);
+            cvvZipVal[0].insertBefore(zipErrorMsg, zipVal.nextSibling);
         }
         if (!document.getElementById('cvv').value.match(/^[\d]{3}$/)) {
-            parent.insertBefore(cvvErrorMsg, cvvZipVal[1].nextSibling);
+            cvvZipVal[1].insertBefore(cvvErrorMsg, cvvVal.nextSibling);
         }
         if (document.getElementById('cc-num').value.match(/^[\d]{13,16}$/) && 
             document.getElementById('zip').value.match(/^[\d]{5}$/) && 
