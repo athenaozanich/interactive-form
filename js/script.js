@@ -1,11 +1,8 @@
-
-
+/*     Global Variables     */
 let infoLabel = document.createElement('LABEL');
-
 let totalCost = 0.00;
 const activitiesCntnr = document.querySelector('.activities');
-
-(function intializePg() {
+(function intializePg() {//auto initialize default display values and append needed elements
     document.getElementById('name').focus();
     document.getElementById('other-title').style.display= 'none';
     document.getElementById('colors-js-puns').style.display= 'none';
@@ -21,8 +18,8 @@ const activitiesCntnr = document.querySelector('.activities');
     infoLabel.setAttribute('id', 'totalCost');
     infoLabel.append(document.createTextNode(`Your total cost: $${totalCost}.00`));
 })();
-
-document.getElementById('title').addEventListener('change', function(e){
+/*     Event Listeners      */
+document.getElementById('title').addEventListener('change', function(e){//hide and show additional input field for other title
     if (e.target.value === 'other') {
         document.getElementById('other-title').style.display= ''
         document.getElementById('other-title').focus();
@@ -30,8 +27,7 @@ document.getElementById('title').addEventListener('change', function(e){
         document.getElementById('other-title').style.display= 'none';
     }
 });
-
-document.getElementById('design').addEventListener('change', function(e){
+document.getElementById('design').addEventListener('change', function(e){//hide and show color options based on theme selected
     let chosenTheme = e.target.value.toString();
     
     if (chosenTheme === 'js puns') {
@@ -70,8 +66,7 @@ document.getElementById('design').addEventListener('change', function(e){
         }
     }
 });
-
-activitiesCntnr.addEventListener('change', function(e){
+activitiesCntnr.addEventListener('change', function(e){//disable conflicting events update cost
 
     let eventEl = e.target;
     let cost = parseInt(eventEl.getAttribute('data-cost'));
@@ -93,8 +88,7 @@ activitiesCntnr.addEventListener('change', function(e){
     }
     infoLabel.textContent = `Your total cost: $${totalCost}.00`;
 });
-
-document.getElementById('payment').addEventListener('change', function (e) {
+document.getElementById('payment').addEventListener('change', function (e) {//hide and show payment section based on user choice
     let paymentType = e.target.value.toString();
     if (paymentType === "credit card") {
         document.getElementById('credit-card').style.display= '';
@@ -112,17 +106,7 @@ document.getElementById('payment').addEventListener('change', function (e) {
         document.getElementById('paypal').style.display= 'none';
     }
 });
-
-document.querySelector('[type="submit"]').addEventListener('click', function (e) {
-    event.preventDefault();
-    if (validateForm()) {
-        console.log('true');
-    }else{
-        console.log('false');
-        
-    }
-});
-document.getElementById('mail').addEventListener('keyup', function(){
+document.getElementById('mail').addEventListener('keyup', function(){//real-time email validation
     let emailVal = document.getElementById('mail');
     if(document.getElementById('mail-error')){
         document.getElementById('mail-error').remove()
@@ -134,7 +118,11 @@ document.getElementById('mail').addEventListener('keyup', function(){
         document.querySelector('form fieldset').insertBefore(emailErrorMsg, emailVal.nextSibling );
     }
 });
-function basicInfoVal() {
+document.querySelector('[type="submit"]').addEventListener('click', function (e) {//call master validation function or prevent default on non-validation
+    if (!validateForm()){event.preventDefault();}
+});
+/*   Validation Functions   */
+function basicInfoVal() {//validate name and email values to enure not empty and meets format requirements
     let parentFieldset = document.querySelector('form fieldset');
     let nameErrorMsg = document.createRange()
     .createContextualFragment(
@@ -178,8 +166,7 @@ function basicInfoVal() {
         return result;
     }
 }
-
-function activitiesVal() {
+function activitiesVal() {//validate activities section to ensure at least one activity has been selected
     let activities = activitiesCntnr.querySelectorAll('[type="checkbox"]');
     let activityErrorMsg = document.createRange()
     .createContextualFragment(
@@ -203,8 +190,7 @@ function activitiesVal() {
         result = false;
     }
 }
-
-function payTypeVal() {
+function payTypeVal() {//validate payment type and if type is credit card the validate card info
     let parent = document.getElementById('credit-card');
     let ccVal = document.querySelector('.col-6');
     let cvvZipVal = document.querySelectorAll('.col-3');
@@ -252,8 +238,7 @@ function payTypeVal() {
         return true;
     }
 }
-
-function validateForm() {
+function validateForm() {//master validation function which checks each form section's validation function for passing
     firstVal = basicInfoVal();
     secondVal = activitiesVal();
     thirdVal = payTypeVal();
