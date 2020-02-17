@@ -13,7 +13,7 @@ const activitiesCntnr = document.querySelector('.activities');
 
     document.getElementById('paypal').style.display= 'none';
     document.getElementById('bitcoin').style.display= 'none';
-    
+
     activitiesCntnr.appendChild(infoLabel);
     infoLabel.setAttribute('id', 'totalCost');
     infoLabel.append(document.createTextNode(`Your total cost: $${totalCost}.00`));
@@ -29,16 +29,16 @@ document.getElementById('title').addEventListener('change', function(e){//hide a
 });
 document.getElementById('design').addEventListener('change', function(e){//hide and show color options based on theme selected
     let chosenTheme = e.target.value.toString();
-    
+
     if (chosenTheme === 'js puns') {
         document.getElementById('colors-js-puns').style.display= '';
-        
+
         for (let i = 0; i < color.children.length; i++) {
-            
+
             if (color.children[i].hasAttribute('selected')) {
                 color.children[i].removeAttribute('selected');
             }
-            
+
             if (i < 3) {
                 if (i === 0) {
                     color.children[i].setAttributeNode(document.createAttribute('selected'));
@@ -53,7 +53,7 @@ document.getElementById('design').addEventListener('change', function(e){//hide 
         for (let i = 0; i < color.children.length; i++) {
             if (color.children[i].hasAttribute('selected')) {
                 color.children[i].removeAttribute('selected');
-                
+
             }
             if (i < 3) {
                 color.children[i].style.display = 'none';
@@ -141,7 +141,7 @@ function basicInfoVal() {//validate name and email values to enure not empty and
     if(document.getElementById('name-error')){
         document.getElementById('name-error').remove()
     }
-    
+
     if (!nameVal.value.trim()) {
         parentFieldset.insertBefore(nameErrorMsg, nameVal.nextSibling );
     }
@@ -149,17 +149,17 @@ function basicInfoVal() {//validate name and email values to enure not empty and
         if(document.getElementById('mail-error')){
             document.getElementById('mail-error').remove()
         }
-    
+
         parentFieldset.insertBefore(emptyEmailMsg, emailVal.nextSibling );
-    }else if (!emailVal.value.match(/^\w+[.]?[@][A-Za-z]+[.][A-Za-z]{3}$/)) {
+    }else if (!emailVal.value.match(/^[\w\.]+[.]?[@][A-Za-z]+[.][A-Za-z]{3}$/)) {
         if(document.getElementById('mail-error')){
             document.getElementById('mail-error').remove()
         }
-    
+
         parentFieldset.insertBefore(frmtEmailErrorMsg, emailVal.nextSibling );
     }
-    if (nameVal.value.trim() && 
-        emailVal.value.trim() && 
+    if (nameVal.value.trim() &&
+        emailVal.value.trim() &&
         emailVal.value.match(/^\w+[.]?[@][A-Za-z]+[.][A-Za-z]{3}$/)) {
         return true;
     }else{
@@ -203,11 +203,11 @@ function payTypeVal() {//validate payment type and if type is credit card the va
     let zipErrorMsg = document.createRange()
     .createContextualFragment(
       `<p id="zip-error">*ERROR: We'll need your billing zip to complete this transaction!*</p>`
-     ); 
+     );
      let cvvErrorMsg = document.createRange()
     .createContextualFragment(
       `<p id="cvv-error">*ERROR: We'll need your 3-digit cvv to complete this transaction!*</p>`
-     ); 
+     );
     let payType = document.getElementById('payment').value;
     let result = false;
     if(document.getElementById('cc-error')){
@@ -229,8 +229,8 @@ function payTypeVal() {//validate payment type and if type is credit card the va
         if (!document.getElementById('cvv').value.match(/^[\d]{3}$/)) {
             cvvZipVal[1].insertBefore(cvvErrorMsg, cvvVal.nextSibling);
         }
-        if (document.getElementById('cc-num').value.match(/^[\d]{13,16}$/) && 
-            document.getElementById('zip').value.match(/^[\d]{5}$/) && 
+        if (document.getElementById('cc-num').value.match(/^[\d]{13,16}$/) &&
+            document.getElementById('zip').value.match(/^[\d]{5}$/) &&
             document.getElementById('cvv').value.match(/^[\d]{3}$/)) {
             return true;
         }else{
